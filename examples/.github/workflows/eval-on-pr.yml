@@ -1,0 +1,12 @@
+name: Eval on PR
+on: [pull_request]
+jobs:
+  eval:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: auraoneai/evalkit-action@v0.1.0
+        with:
+          rubric-path: examples/rubric.jsonl
+          responses-path: examples/responses.jsonl
+          threshold: "0.8"

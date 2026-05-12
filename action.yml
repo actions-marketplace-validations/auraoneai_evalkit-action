@@ -1,0 +1,10 @@
+name: EvalKit Action
+description: Run AuraOne EvalKit rubric scoring in CI.
+inputs:
+  rubric-path: { required: true, description: "Path to rubric" }
+  responses-path: { required: true, description: "Path to responses" }
+  judge-config: { required: false, description: "Judge config JSON", default: "{}" }
+  threshold: { required: false, description: "Minimum score", default: "0" }
+runs:
+  using: node20
+  main: dist/index.js
