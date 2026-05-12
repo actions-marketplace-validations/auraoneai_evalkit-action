@@ -25,3 +25,4 @@ jobs:
 ```
 
 The action installs `auraone-evalkit`, writes report-ready score JSON, generates a Markdown report, comments on pull requests when a token and PR context are available, and fails the check when the average score is below `threshold`.
+`judge-config` must be a JSON object. The action validates it, writes it to a temporary file, and exposes it to EvalKit subprocesses as `EVALKIT_JUDGE_CONFIG` and `EVALKIT_JUDGE_CONFIG_PATH`.

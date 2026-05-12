@@ -6,9 +6,10 @@
 
 1. Read action inputs for rubric path, responses path, judge config, and optional score threshold.
 2. Install `auraone-evalkit` inside the action runtime.
-3. Run `evalkit score --format report-json` and `evalkit report` against repository files.
-4. Emit a PR comment with the Markdown report when pull request context and a token are available.
-5. Fail the check when a configured threshold is not met.
+3. Validate `judge-config` as a JSON object, write it to a temporary file, and expose both `EVALKIT_JUDGE_CONFIG` and `EVALKIT_JUDGE_CONFIG_PATH` to EvalKit subprocesses.
+4. Run `evalkit score --format report-json` and `evalkit report` against repository files.
+5. Emit a PR comment with the Markdown report when pull request context and a token are available.
+6. Fail the check when a configured threshold is not met.
 
 ## Design Decisions
 

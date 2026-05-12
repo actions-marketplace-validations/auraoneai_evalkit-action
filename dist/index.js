@@ -1,4 +1,4 @@
-import { runEvalkit } from "./runner.js";
+import { parseJudgeConfig, runEvalkit } from "./runner.js";
 import { buildComment, postPullRequestComment } from "./pr_comment.js";
 const rubric = process.env["INPUT_RUBRIC-PATH"] ?? process.argv[2];
 const responses = process.env["INPUT_RESPONSES-PATH"] ?? process.argv[3];
@@ -7,13 +7,16 @@ if (!rubric || !responses)
     throw new Error("rubric-path and responses-path are required");
 if (!Number.isFinite(threshold))
     throw new Error("threshold must be numeric");
+const judgeConfig = parseJudgeConfig(process.env["INPUT_JUDGE-CONFIG"]);
 const result = runEvalkit(rubric, responses, {
     threshold,
     labelsPath: process.env["INPUT_LABELS-PATH"],
+    judgeConfig,
 });
 const comment = buildComment({
     status: result.status,
     threshold,
+    judge_config: judgeConfig,
     average_score: result.averageScore,
     passed_threshold: result.passedThreshold,
     report: result.report || result.stdout,
