@@ -1,12 +1,21 @@
-name: EvalKit Action
-description: Run AuraOne EvalKit rubric scoring in CI.
+name: AuraOne EvalKit Quality Gate
+description: Score repository responses with AuraOne EvalKit and publish an inspectable advisory or blocking decision.
+author: AuraOne
 inputs:
-  rubric-path: { required: true, description: "Path to rubric" }
-  responses-path: { required: true, description: "Path to responses" }
-  labels-path: { required: false, description: "Optional labels path. Defaults to labels.jsonl next to responses." }
-  judge-config: { required: false, description: "Judge config JSON", default: "{}" }
-  threshold: { required: false, description: "Minimum score", default: "0" }
-  github-token: { required: false, description: "Token used to post pull request comments." }
+  rubric-path: { required: true, description: "Path to the EvalKit rubric file in the checked-out workspace." }
+  responses-path: { required: true, description: "Path to the response JSONL in the checked-out workspace." }
+  labels-path: { required: false, description: "Optional labels file passed to evalkit score." }
+  judge-config: { required: false, description: "EvalKit judge configuration serialized as a JSON object.", default: "{}" }
+  threshold: { required: false, description: "Minimum average score from 0 through 1; zero keeps the check advisory.", default: "0" }
+  github-token: { required: false, description: "GitHub token used to list and update the bot-owned pull request comment.", default: "${{ github.token }}" }
+  comment-on-pr: { required: false, description: "Create or update one bot-owned evidence comment on pull_request events.", default: "true" }
+outputs:
+  decision:
+    description: "Normalized evaluation decision: pass, review, fail, or blocked."
+  average-score:
+    description: "Average EvalKit score from 0 through 1, when available."
+  threshold:
+    description: "Configured minimum average score."
 runs:
   using: node20
   main: dist/index.js

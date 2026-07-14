@@ -1,12 +1,21 @@
 {
   "name": "@auraone/evalkit-action",
-  "version": "0.1.1",
+  "version": "0.2.0",
   "private": false,
+  "description": "GitHub Action that runs AuraOne EvalKit rubric scoring and publishes threshold decisions with inspectable evidence.",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/auraoneai/evalkit-action.git"
+  },
+  "homepage": "https://github.com/auraoneai/evalkit-action#readme",
+  "bugs": "https://github.com/auraoneai/evalkit-action/issues",
+  "keywords": ["github-action", "github-actions", "llm-evaluation", "evals", "rubric", "quality-gate", "llm-as-judge"],
   "license": "MIT",
   "type": "module",
   "scripts": {
     "build": "tsc",
-    "test": "tsc && node dist/self_test.js"
+    "test": "tsc && node dist/self_test.js",
+    "release:preflight": "node scripts/release-preflight.mjs"
   },
   "devDependencies": {
     "@types/node": "^20.0.0",
